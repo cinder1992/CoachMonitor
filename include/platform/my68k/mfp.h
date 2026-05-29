@@ -29,6 +29,6 @@
 #define MFP_UDR 	0x2F
 
 void mfp_init(void);
-void mfp_putc(char);
+void mfp_putc(unsigned char);
 unsigned char mfp_getc(void);
 #endif //_MFP_H

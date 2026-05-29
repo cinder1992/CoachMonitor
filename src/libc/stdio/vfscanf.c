@@ -22,14 +22,16 @@ static void fgethex(FILE* __restrict file, int* var) {
 static void fgetdec(FILE* __restrict file, int* var){
 	*var = 0;
 	int val;
+	// Skip leading whitespace
+	while(isspace(val = fgetc(file)));
+
+	//parse digits
 	do {
+		//We can assume that val is not whitespace at this stage
+		*var = (*var * '\x0A') + (val - '0');
 		val = fgetc(file);
-		if(isdigit(val)) {
-			*var = (*var * '\x0A') + (val - '0');
-		} else {
-			break;
-		}
 	} while(isdigit(val));
+	ungetc(val, file); //unget last non-space character
 }
 
 static inline void getlenvar(const char* format, int* idx, int* val) {
@@ -43,14 +45,9 @@ int vfscanf(FILE* file, const char* format, va_list args) {
 	int retv = 0;
 	int idx = 0;
 	int tmp;
+	while(isspace(format[idx]) && format[idx] != '\0') idx++; //Skip leading whitespace chars in format
 	while(format[idx] != '\0') {
-		while(isspace(format[idx]) && format[idx] != '\0') { idx++; } //skip whitespace
-		if(format[idx] == '\0') {break;} //dumb guard
-		if(format[idx] != '%') {
-			if(format[idx] != fgetc(file)) {
-				return retv;
-			}
-		} else { //format[idx] == '%'
+		if(format[idx] == '%') {
 			switch(format[++idx]) {
 				case 'x':
 				case 'X':
@@ -70,12 +67,15 @@ int vfscanf(FILE* file, const char* format, va_list args) {
 					fgets(va_arg(args, char*), tmp, file);
 					retv++;
 					break;
-				default:
+				default: //Error condition: Unsupported Format
 					return retv;
 					break;
-			}
-		}
-		idx++;
+			} idx++;
+		} else if(format[idx] == ' ') {
+			idx++;
+			while(isspace(tmp = fgetc(file))); //skip whitespace in file
+			ungetc(tmp, file); // unget the last non-space character
+		} else if(fgetc(file) != format[idx++]) break;
 	}
 	return retv;
 }

@@ -1,4 +1,4 @@
-TARGET := m68k-elf
+ARGET := m68k-elf
 # override CC
 CC := $(TARGET)-gcc
 AS := $(TARGET)-as
@@ -12,7 +12,7 @@ PLATVPATH := $(PLATDIR)
 OPTIMISE := 2
 
 LDFLAGS := -march=68000 -ffreestanding -O$(OPTIMISE) -nostdlib -static-libgcc -lgcc -T $(SRCDIR)/platform/$(PLATFORM)/linker.ld
-CFLAGS := -I$(INCDIR) -I$(LIBCINCDIR) -I$(INCDIR)/platform/$(PLATFORM) -march=68010 -std=gnu99 -ffreestanding -O$(OPTIMISE) -Wall -Wextra
+CFLAGS := -DPLATFORM_CC=$(CC) -I$(INCDIR) -I$(LIBCINCDIR) -I$(INCDIR)/platform/$(PLATFORM) -march=68010 -std=gnu99 -ffreestanding -O$(OPTIMISE) -Wall -Wextra
 
 PLATFILES := *.bin* *.elf *.o *.s.o
 
@@ -20,16 +20,16 @@ PLATEXT := .elf
 
 .PHONY: platform
 
-mm.bin: mm.elf
+coach.bin: coach.elf
 	$(OBJCOPY) -O binary --gap-fill 0x00 --pad-to 0x100000 $< $@
 
-mm.bin.lo: mm.bin
+coach.bin.lo: coach.bin
 	$(OBJCOPY) -F binary -i 2 -b 1 $< $@
 
-mm.bin.hi: mm.bin
+coach.bin.hi: coach.bin
 	$(OBJCOPY) -F binary -i 2 -b 0 $< $@
 
-mm.s68: mm.elf
+coach.s68: coach.elf
 	$(OBJCOPY) -O srec $< $@
 
-platform: mm.bin.lo mm.bin.hi
+platform: coach.bin.lo coach.bin.hi

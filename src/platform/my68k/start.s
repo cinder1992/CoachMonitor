@@ -27,6 +27,8 @@ again2:
 	dbra %d0, again2
 	andi #0xF8FF, %SR
 	jsr mfp_init
-	jmp main
+	jsr main
+	/* main should never return, but if it does... */
+	illegal
 
 .end

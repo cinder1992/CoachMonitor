@@ -12,15 +12,15 @@ PLATVPATH := $(PLATDIR)
 OPTIMISE := 0
 
 LDFLAGS := -g -O$(OPTIMISE) -nostdlib -static-libgcc -lgcc
-CFLAGS := -g -I$(INCDIR) -I$(LIBCINCDIR) -I$(INCDIR)/platform/$(PLATFORM) -std=gnu99 -O$(OPTIMISE) -Wall -Wextra
+CFLAGS := -DPLATFORM_CC=$(CC) -g -I$(INCDIR) -I$(LIBCINCDIR) -I$(INCDIR)/platform/$(PLATFORM) -std=gnu99 -O$(OPTIMISE) -Wall -Wextra
 
-PLATFILES := mm *.o *.s.o
+PLATFILES := coach *.o *.s.o
 
 PLATEXT :=
 
 .PHONY: platform debug
 
-platform: mm
+platform: coach
 
-debug: mm
-	gdb mm
+debug: coach
+	gdb coach

@@ -1,16 +1,10 @@
 #include <stdio.h>
+#include <main.h>
+
+const char signon_str[] = "COACH Monitor program " COACH_VERSION "\n"; 
+const char compile_str[] = "Compiled with " _PLATFORM_CC " v" _PLATFORM_CC_VERSION " on " __DATE__ " at " __TIME__ "\n";
 
 void main() {
-	const char str[] = "Hellorld!\r\n";
-	int i = 0;
-	int j = 0;
-	puts(str);
-	while(1) {
-		int val = scanf("%d %d", &i, &j);
-		if(val != 2) {
-			printf("Ohgodwhat %x", val);
-			continue;
-		}
-		printf("0x%x 0x%x", i, j);
-	}
+	printf(signon_str);
+	printf(compile_str);
 }

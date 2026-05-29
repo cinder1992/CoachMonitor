@@ -29,7 +29,9 @@ static const char* errorStrings[] = {
 	"Uninitialized Interrupt Vector",
 	"RESERVED","RESERVED","RESERVED","RESERVED",
 	"RESERVED","RESERVED","RESERVED","RESERVED",
-	"Spurious Interrupt"
+	"Spurious Interrupt",
+	"","","","","","",
+	"ABORT"
 };
 
 void __attribute__((interrupt)) err_bomb(void) {

@@ -21,7 +21,7 @@ VPATH := $(SRCDIR):$(PLATVPATH):$(LIBCVPATH)
 
 default: all
 
-mm$(PLATEXT): $(OBJS)
+coach$(PLATEXT): $(OBJS)
 	$(LD) -o $@ $^ $(LDFLAGS)
 
 %.o: %.c

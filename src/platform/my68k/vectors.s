@@ -21,7 +21,8 @@
 	.dc.l err_bomb /* Uninitialized Vector */
 	.ds.l 8,0 /* Reserved */
 	.dc.l err_bomb /* Spurrious interrupt */
-	.ds.l 7,0 /* Autovector 1-7 */
+	.ds.l 6,0 /* Autovector 1-6 */
+	.dc.l err_bomb /* Autovector 7 (ABORT) */
 	/* traps */
 	.ds.l 16,0
 	/* reserved vectors */

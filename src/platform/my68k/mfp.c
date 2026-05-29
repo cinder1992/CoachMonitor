@@ -13,7 +13,7 @@ typedef struct ring_buffer_s {
 
 ring_buffer_t txbuf, rxbuf;
 
-inline static void buff_push(ring_buffer_t* bptr, char chr) {
+inline static void buff_push(ring_buffer_t* bptr, unsigned char chr) {
 	while((bptr->widx + 1) % MAX_BUF_SIZE == bptr->ridx); //Wait for a space in the buffer
 	bptr->buf[bptr->widx] = chr;
 	bptr->widx = (bptr->widx + 1) % MAX_BUF_SIZE ;
@@ -100,7 +100,7 @@ void mfp_init(void) {
 	mfp[MFP_IERA] = 0x94;
 }
 
-void mfp_putc(char byte) {
+void mfp_putc(unsigned char byte) {
 	if(mfp[MFP_TSR] & 0x80) {
 		mfp[MFP_UDR] = byte;
 	} else {
