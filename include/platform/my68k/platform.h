@@ -6,11 +6,8 @@
 #define _PLATFORM_BUFSIZ 0
 #define _PLATFORM_L_tempnam 0
 
-#define XSTR(S) STR(S)
-#define STR(S) #S
-
-#define _PLATFORM_CC XSTR(PLATFORM_CC)
-#define _PLATFORM_VER __VERSION__
+#define _PLATFORM_CC PLATFORM_CC
+#define _PLATFORM_CC_VERSION __VERSION__
 
 #define __need_size_t
 #define __need_NULL

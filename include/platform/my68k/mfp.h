@@ -1,7 +1,7 @@
 #ifndef _MFP_H
 #define _MFP_H 1
 
-#define MFP_BASE	(unsigned char*)0x200000
+#define MFP_BASE	(unsigned char*)0xF00000
 //MC68901P Registers
 #define MFP_GPDR	0x01
 #define MFP_AER 	0x03

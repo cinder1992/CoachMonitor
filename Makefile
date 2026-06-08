@@ -17,6 +17,11 @@ OBJS += $(patsubst %.s,%.s.o, $(notdir $(ASSRCS)))
 
 VPATH := $(SRCDIR):$(PLATVPATH):$(LIBCVPATH)
 
+GITVER := $(shell git describe --dirty || echo -n "")
+ifneq ($(GITVER), "")
+CFLAGS += -DCOACH_VERSION=\"$(GITVER)\"
+endif
+
 .PHONY: all clean
 
 default: all

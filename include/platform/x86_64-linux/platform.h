@@ -5,10 +5,7 @@
 #define _PLATFORM_BUFSIZ 255
 #define _PLATFORM_L_tempnam 255
 
-#define XSTR(S) STR(S)
-#define STR(S) #S
-
-#define _PLATFORM_CC XSTR(PLATFORM_CC)
+#define _PLATFORM_CC PLATFORM_CC
 #define _PLATFORM_CC_VERSION __VERSION__
 
 #define __need_size_t
