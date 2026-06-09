@@ -7,20 +7,31 @@ MEMORY
 
 SECTIONS
 {
-    ENTRY(_start)
-    _SSP = ORIGIN(RAM)+LENGTH(RAM);
-    _USP = _SSP - 4k;
-    .vectors : {*(.vectors)} > VECTBL AT > ROM
-    .data : {*(.data)} > RAM AT > ROM
-    .bss : {*(.bss) *(COMMON)} > RAM
-    .text : {*(.text) *(.rodata)} > ROM
-    .rodata : {*(.rodata) *(.rodata*)} > ROM
-    _data = ADDR(.data);
-    _edata = ADDR(.data) + SIZEOF(.data);
-    _ldata = LOADADDR(.data);
-    _bss = ADDR(.bss);
-    _ebss = ADDR(.bss) + SIZEOF(.bss);
-    _vectors = ADDR(.vectors);
-    _lvectors = LOADADDR(.vectors);
-    _evectors = ADDR(.vectors) + SIZEOF(.vectors);
+	ENTRY(_start)
+	/* ROM entries */
+	.text : { *(.text) *(.text*) } >ROM
+	.rodata : { *(.rodata) *(.rodata*) } >ROM
+
+	/* Vector table */
+	.vectors : {*(.vectors)} >VECTBL AT>ROM
+	.tpa ORIGIN(RAM) (NOLOAD) : { . = ABSOLUTE(ORIGIN(RAM) + LENGTH(RAM) - (8K + 512)); _etpa = .; } >RAM
+	.ustack (NOLOAD) : { . = 4K; } >RAM
+	.sstack (NOLOAD) : { . = 4K; } >RAM
+	.data : {
+		*(.data)
+		. = ALIGN(256);
+	} >RAM AT>ROM
+	.bss (NOLOAD) : { *(.bss) *(COMMON) . = ALIGN(256); } >RAM
+
+	/* Symbols used for loading data by the loader */
+	_vectors = ADDR(.vectors);
+	_evectors = ADDR(.vectors) + SIZEOF(.vectors);
+	_lvectors = LOADADDR(.vectors);
+	_data = ADDR(.data);
+	_edata = ADDR(.data) + SIZEOF(.data);
+	_ldata = LOADADDR(.data);
+	_bss = ADDR(.bss);
+	_ebss = ADDR(.bss) + SIZEOF(.bss);
+	_SSP = ADDR(.sstack) + SIZEOF(.sstack);
+	_USP = ADDR(.ustack) + SIZEOF(.ustack);
 }
