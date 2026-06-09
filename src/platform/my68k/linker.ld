@@ -8,12 +8,15 @@ MEMORY
 SECTIONS
 {
 	ENTRY(_start)
-	/* ROM entries */
-	.text : { *(.text) *(.text*) } >ROM
-	.rodata : { *(.rodata) *(.rodata*) } >ROM
 
 	/* Vector table */
 	.vectors : {*(.vectors)} >VECTBL AT>ROM
+
+	/* ROM entries */
+	.text : { *(.text) *(.text*) } >ROM
+	.rodata : { *(.rodata) *(.rodata*) } >ROM
+	
+	/* RAM entries */
 	.tpa ORIGIN(RAM) (NOLOAD) : { . = ABSOLUTE(ORIGIN(RAM) + LENGTH(RAM) - (8K + 512)); _etpa = .; } >RAM
 	.ustack (NOLOAD) : { . = 4K; } >RAM
 	.sstack (NOLOAD) : { . = 4K; } >RAM
