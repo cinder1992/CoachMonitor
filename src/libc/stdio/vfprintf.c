@@ -56,6 +56,10 @@ static inline int parse_and_emit(FILE* file, const char* format, int* idx, va_li
 			itoa(va_arg(args, int), 16, s);
 			tmp = fputs(s, file);
 			break;
+		case 'd':
+			itoa(va_arg(args, int), 10, s);
+			tmp = fputs(s, file);
+			break;
 		default:
 			return EOF;
 	}
