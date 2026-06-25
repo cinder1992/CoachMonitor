@@ -17,4 +17,7 @@ extern unsigned long strtoul(const char*, char**, int);
 extern long strtol(const char*, char**, int);
 extern unsigned long strtoul(const char*, char**, int); //Duplicated code go brrr
 extern size_t strspn(const char*, const char*);
+extern size_t strcspn(const char*, const char*);
+extern char* strpbrk(const char*, const char*);
+extern char* strtok(char*, const char*);
 #endif

@@ -3,7 +3,6 @@
 
 unsigned long strtoul(const char* str, char** str_end, int base) {
 	*str_end = (char*)str;
-	int negate = 0;
 	unsigned long retval = 0;
 	if(base > 36) return 0; //Base must be less than 36!
 	while(isspace(**str_end)) {(*str_end)++;} //Skip leading whitespace
