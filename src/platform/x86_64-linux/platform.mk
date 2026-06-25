@@ -11,7 +11,7 @@ PLATVPATH := $(PLATDIR)
 
 OPTIMISE := 0
 
-LDFLAGS := -g -O$(OPTIMISE) -nostdlib -static-libgcc -lgcc
+LDFLAGS := -g -O$(OPTIMISE) -nostdlib -static-libgcc -lgcc -T $(SRCDIR)/platform/$(PLATFORM)/linker.ld
 CFLAGS := -DPLATFORM_CC=\"$(CC)\" -g -I$(INCDIR) -I$(LIBCINCDIR) -I$(INCDIR)/platform/$(PLATFORM) -std=gnu99 -O$(OPTIMISE) -Wall -Wextra
 
 PLATFILES := coach *.o *.s.o
